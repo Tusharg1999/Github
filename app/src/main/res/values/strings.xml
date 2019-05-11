@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Github_followers</string>
+    <string name="search_for_github_account">Search for \n Github Account</string>
 </resources>
