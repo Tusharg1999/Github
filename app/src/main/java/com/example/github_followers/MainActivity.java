@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     {
         userid=findViewById(R.id.text_editor);
         submitbutton=findViewById(R.id.submit_button);
-//        url="https://api.github.com/users";
+//
     }
 
 }
