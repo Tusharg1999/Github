@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +16,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -25,6 +28,7 @@ public class DashPage extends AppCompatActivity {
     String user_url;
     Handler handler;
     TextView userName;
+    CircleImageView avatarImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class DashPage extends AppCompatActivity {
         user_url = "https://api.github.com/users/" + id;
         handler=new Handler(getApplicationContext().getMainLooper());
         userName=findViewById(R.id.name_text);
+        avatarImage=findViewById(R.id.avatar_image);
     }
 
     private void getUserData() {
@@ -64,10 +69,14 @@ public class DashPage extends AppCompatActivity {
                     Log.d(TAG, "onResponse: "+responseData);
                     JSONObject json = new JSONObject(responseData);
                     String owner = json.getString("name");
-                    handler.post(new Runnable() {
+                    Log.d(TAG, "onResponse: name"+owner);
+                    String imageUrl=json.getString("avatar_url");
+                    Log.d(TAG, "onResponse: image url is"+imageUrl);
+                    handler.post(new Runnable(){
                         @Override
                         public void run() {
                             userName.setText(owner);
+                            Picasso.with(DashPage.this).load(imageUrl).into(avatarImage);
                         }
                     });
 
