@@ -27,7 +27,7 @@ public class DashPage extends AppCompatActivity {
     private static final String TAG = "DashPage";
     String user_url;
     Handler handler;
-    TextView userName;
+    TextView userName,userBio;
     CircleImageView avatarImage;
 
     @Override
@@ -49,6 +49,7 @@ public class DashPage extends AppCompatActivity {
         handler=new Handler(getApplicationContext().getMainLooper());
         userName=findViewById(R.id.name_text);
         avatarImage=findViewById(R.id.avatar_image);
+        userBio=findViewById(R.id.bio_text);
     }
 
     private void getUserData() {
@@ -72,11 +73,14 @@ public class DashPage extends AppCompatActivity {
                     Log.d(TAG, "onResponse: name"+owner);
                     String imageUrl=json.getString("avatar_url");
                     Log.d(TAG, "onResponse: image url is"+imageUrl);
+                    String bio=json.getString("bio");
+                    Log.d(TAG, "onResponse: bio"+bio);
                     handler.post(new Runnable(){
                         @Override
                         public void run() {
                             userName.setText(owner);
                             Picasso.with(DashPage.this).load(imageUrl).into(avatarImage);
+                            userBio.setText(bio);
                         }
                     });
 
